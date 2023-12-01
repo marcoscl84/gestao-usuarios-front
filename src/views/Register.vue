@@ -3,9 +3,19 @@
         <h2>Registro de usuário</h2>
         <hr>
 
-
         <div class="columns is-mobile is-centered">
             <div class="column is-half">
+                <div v-if="error != undefined">
+                    <div class="notification is-danger">
+                        <p>{{ error }}</p>
+                    </div>
+                </div>
+                <div v-else-if="success">
+                    <div class="notification is-success">
+                        <p>{{ success }}</p>
+                    </div>
+                </div>
+
                 <p>Nome</p>
                 <input type="text" class="input" placeholder="Nome do usuário" v-model="name">
                 <p>E-mail</p>
@@ -31,7 +41,9 @@ export default {
         return{
             name: '',
             password: '',
-            email: ''
+            email: '',
+            error: undefined,
+            success: undefined
         }
     },
     methods: {
@@ -42,8 +54,12 @@ export default {
                 password: this.password
             }).then(res => {
                 console.log(res)
+                var msgSuccess = 'Usuário cadastrado com sucesso!'
+                this.success = msgSuccess;
             }).catch(error => {
-                console.log(error.response)
+                console.log(error)
+                var msgErro = error.response.data.error;
+                this.error = msgErro;
             })
 
         }
