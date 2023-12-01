@@ -7,13 +7,13 @@
         <div class="columns is-mobile is-centered">
             <div class="column is-half">
                 <p>Nome</p>
-                <input type="text" class="input" name="" id="" placeholder="Nome do usuário">
+                <input type="text" class="input" placeholder="Nome do usuário" v-model="name">
                 <p>E-mail</p>
-                <input type="email" class="input" name="" id="" placeholder="email@email.com">
+                <input type="email" class="input" placeholder="email@email.com" v-model="email">
                 <p>Senha</p>
-                <input type="password" class="input" name="" id="" placeholder="*********">
+                <input type="password" class="input" placeholder="*********" v-model="password">
                 <br><br>
-                <button class="button is-success">Cadastrar</button>
+                <button class="button is-success" @click="register()">Cadastrar</button>
 
             </div>
         </div>
@@ -25,7 +25,21 @@
 <script>
 
 export default {
-    name: 'RegistroComponent'
+    name: 'RegistroComponent',
+    data(){
+        return{
+            name: '',
+            password: '',
+            email: ''
+        }
+    },
+    methods: {
+        register(){
+            console.log(this.name)
+            console.log(this.email)
+            console.log(this.password)
+        }
+    }
 }
 </script>
 
