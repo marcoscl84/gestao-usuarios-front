@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 
 export default {
     name: 'RegistroComponent',
@@ -35,9 +36,16 @@ export default {
     },
     methods: {
         register(){
-            console.log(this.name)
-            console.log(this.email)
-            console.log(this.password)
+            axios.post("http://localhost:8686/user", {
+                name: this.name,
+                email: this.email,
+                password: this.password
+            }).then(res => {
+                console.log(res)
+            }).catch(error => {
+                console.log(error.response)
+            })
+
         }
     }
 }
