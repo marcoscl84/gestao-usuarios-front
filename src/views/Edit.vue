@@ -65,13 +65,19 @@ export default {
     },
     methods: {
         update(){
-            axios.post("http://localhost:8686/user", {
+            var req = {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('token')
+                }
+            }
+
+            axios.put("http://localhost:8686/user", {
                 name: this.name,
-                email: this.email
-            }).then(res => {
+                email: this.email,
+                id: this.id
+            }, req).then(res => {
                 console.log(res)
-                var msgSuccess = 'Usuário cadastrado com sucesso!'
-                this.success = msgSuccess;
+                this.$router.push({name: 'Users'})
             }).catch(error => {
                 console.log(error)
                 var msgErro = error.response.data.error;
