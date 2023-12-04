@@ -36,14 +36,10 @@
                         Deseja realmente deletar esse usuário?
                         </p>
                     </header>
-                    <!-- <div class="card-content">
-                        <div class="content">
-                            
-                        </div>
-                    </div> -->
+
                     <footer class="card-footer">
                         <a href="#" class="card-footer-item" @click="hideModal()">Cancelar</a>
-                        <a href="#" class="card-footer-item">Deletar</a>
+                        <a href="#" class="card-footer-item" @click="deleteUser()">Deletar</a>
                     </footer>
                 </div>
             </div>
@@ -74,7 +70,8 @@ export default {
     data(){
         return{
             users: [],
-            showModal: false
+            showModal: false,
+            deleteUserId: -1
         }
     },
     methods: {
@@ -91,8 +88,24 @@ export default {
             this.showModal = false;
         },
         showModalMethod(id){
-            console.log(id)
+            this.deleteUserId = id;
             this.showModal = true;
+        },
+        deleteUser(){
+            var req = {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('token')
+                }
+            }
+
+            axios.delete("http://localhost:8686/user/" + this.deleteUserId, req).then(res => {
+                console.log(res);
+                this.showModal = false;
+                this.users = this.users.filter(u => u.id != this.deleteUserId)
+            }).catch(error => {
+                console.log(error);
+                this.showModal = false;
+            })
         }
     }
 }
